@@ -1,0 +1,131 @@
+{
+  "headerData": {
+    "logoImgV1": "/images/header/logoV1.svg",
+    "logoImgV2": "/images/header/logoV2.svg",
+    "btnText": "Results"
+  },
+
+  "navData": [
+    { "name": "Election Commission", "href": "/election" },
+    { "name": "Cast Vote", "href": "/vote" },
+     { "name": "Voter Registration", "href": "/voterReg" }
+  ],
+
+  "heroData": {
+    "title": "Secure Your Democracy with Blockchain-Powered Voting.",
+    "sceneImg": "/images/hero/scene.svg",
+    "boyImg": "/images/hero/boy.svg",
+    "girlImg": "/images/hero/girl.svg",
+    "truckImg": "/images/hero/truck.svg",
+    "btnText": "Cast Vote"
+  },
+
+  "aboutData": {
+    "title": "About us",
+    "subtitle": "DeciVote offers a secure and transparent voting platform for Indian elections. Our platform leverages blockchain technology and advanced facial recognition to provide tamper-proof voting. We're committed to promoting trust in the electoral process and ensuring a fair and democratic India.",
+    "text": "Revolutionize Indian Elections with DeciVote - Secure and Tamper-Proof Voting for All.",
+    "boyImg": "/images/about/boy.svg"
+  },
+
+  "howData": {
+    "title": "How to apply",
+    "subtitle": "Here's a step-by-step guide:\nVisit our website and create an account by providing your basic information and completing the registration process.\nOnce your account is verified, you'll be able to log in and access the voting platform.\nVerify your identity using advanced facial recognition technology.\nBrowse through the list of candidates and select your preferred candidate.\nConfirm your selection and submit your vote.\nOnce your vote is recorded on the blockchain, you'll receive a confirmation of your vote.\nIn addition to casting your vote, you can also browse through election-related news and updates on our platform. If you have any questions or encounter any issues while using our website, our customer support team is available to assist you.",
+    "girlImg": "/images/how/girl.svg"
+  },
+
+  "faqData": {
+    "pretitle": "faq",
+    "title": "Questions and Answers on DeciVote:",
+    "boyImg": "/images/faq/boy.svg",
+    "accordions": [
+      {
+        "question": "What is DeciVote?",
+        "answer": "DeciVote is a secure and transparent voting platform for Indian elections, which leverages blockchain technology and advanced facial recognition to ensure tamper-proof voting."
+      },
+      {
+        "question": "How do I register on DeciVote?",
+        "answer": "To register as voter on DeciVote, simply visit our website and complete the registration process by providing your basic information."
+      },
+      {
+        "question": "How does facial recognition work on DeciVote?",
+        "answer": "Our facial recognition technology verifies your identity by analyzing key features of your face, such as the distance between your eyes, nose, and mouth."
+      },
+      {
+        "question": "Can I change my vote after I've submitted it on DeciVote?",
+        "answer": "No, once you've submitted your vote on DeciVote, you won't be able to change it."
+      },
+      {
+        "question": "How secure is DeciVote?",
+        "answer": "DeciVote uses the latest blockchain technology to ensure that your vote is secure and tamper-proof. Additionally, we employ strict security measures to protect your personal information."
+      },
+      {
+        "question": "How can I get help if I encounter any issues while using DeciVote?",
+        "answer": "If you have any questions or encounter any issues while using DeciVote, our customer support team is available to assist you via email or phone."
+      },
+      {
+        "question": "Is DeciVote available for all elections in India?",
+        "answer": "Currently, DeciVote is available for select state elections in India, depending on the requirements of the election commission."
+      },
+      {
+        "question": "What are the benefits of using DeciVote for elections?",
+        "answer": "DeciVote ensures secure and tamper-proof voting, as well as faster , online and more efficient vote counting. It also eliminates the need for physical ballot papers, reducing the environmental impact of elections."
+      },
+      {
+        "question": "How does DeciVote ensure transparency in the election process?",
+        "answer": "DeciVote records all votes on the blockchain, which is a distributed ledger that can't be altered or tampered with. This ensures that the election results are transparent and trustworthy."
+      },
+      {
+        "question": "What happens if there is a technical issue during the voting process on DeciVote?",
+        "answer": "In the rare event of a technical issue, our team will work to resolve it as quickly as possible. If necessary, we may extend the voting period or provide alternative voting methods."
+      },
+      {
+        "question": "Can I use DeciVote from anywhere in the world?",
+        "answer": "No, DeciVote is only available for use within India, and only for eligible voters who meet the requirements set by the election commission."
+      }
+    ]
+  },
+  "testimonialData": {
+    "pretitle": "testimonials",
+    "title": "Our Awesome Reviews",
+    "clients": [
+      {
+        "message": "DeciVote's blockchain-based voting platform was a game-changer for our recent election. We were able to ensure secure and transparent voting, and the process was much more efficient than traditional paper ballots.",
+        "image": "/images/testimonials/avatar1.png",
+        "name": "Election Commissioner"
+      },
+      {
+        "message": "As an eligible voter, I was initially skeptical about using DeciVote. However, after using the platform, I was impressed by how easy and secure the process was. The facial recognition technology worked flawlessly, and I felt confident that my vote was counted accurately.",
+        "image": "/images/testimonials/avatar2.png",
+        "name": "Voter"
+      },
+      {
+        "message": "DeciVote's platform provided an efficient and transparent voting process for our organization's annual elections. The blockchain technology ensured that the results were tamper-proof and accurate. We will definitely be using DeciVote again in the future.",
+        "image": "/images/testimonials/avatar3.png",
+        "name": "Organization President"
+      },
+      {
+        "message": "DeciVote's platform saved us a lot of time and resources compared to traditional paper ballots. We were able to quickly tally the results and have confidence in their accuracy. I would definitely recommend DeciVote to any organization looking for a modern and efficient voting solution.",
+        "image": "/images/testimonials/avatar1.png",
+        "name": "Board Member"
+      }
+    ]
+  },
+  "footerData": {
+    "truckImg": "/images/hero/boy.svg",
+    "hillImg": "/images/footer/hill.svg",
+    "text": "Your Voice, Your Vote: Empowering Indian Citizens with DeciVote's Cutting-Edge Voting System!",
+    "logo": "/images/footer/logo.svg",
+    "links": [
+      { "name": "about", "href": "/" },
+      { "name": "how to", "href": "/" },
+      { "name": "faqs", "href": "/" }
+    ],
+    "form": {
+      "labelName": "Name",
+      "placeholderName": "Your name",
+      "labelEmail": "Email address",
+      "placeholderEmail": "Your email adddress",
+      "btnText": "Get Started"
+    }
+  }
+}
