@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 
-const ConstituencyDetail = () => {
+const ConstituencyDetail = ({id,
+name,
+constituencyCode,
+totalCandidate}) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -27,11 +30,13 @@ const ConstituencyDetail = () => {
               <tbody className="text-sm divide-y divide-gray-100">
                 <tr>
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">Constituency Id</div>
+                    <div className="font-medium text-gray-800">
+                      Constituency Id
+                    </div>
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">1</div>
+                    <div className="font-medium text-gray-800">{id}</div>
                   </td>
                 </tr>
                 <tr>
@@ -42,24 +47,23 @@ const ConstituencyDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">
-                      Phoolpur
-                    </div>
+                    <div className="font-medium text-gray-800">{name}</div>
                   </td>
                 </tr>
                 <tr>
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">Constituency Code</div>
+                    <div className="font-medium text-gray-800">
+                      Constituency Code
+                    </div>
                   </td>
 
                   <td className="p-2">
                     <div className="font-medium text-gray-800">
-                      256
+                      {constituencyCode}
                     </div>
                   </td>
                 </tr>
-               
-             
+
                 <tr>
                   <td className="p-2">
                     <div className="font-medium text-gray-800">
@@ -68,7 +72,9 @@ const ConstituencyDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">5</div>
+                    <div className="font-medium text-gray-800">
+                      {totalCandidate}
+                    </div>
                   </td>
                 </tr>
               </tbody>

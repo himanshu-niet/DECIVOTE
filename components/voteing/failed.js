@@ -20,16 +20,15 @@ const Failed = ({ show ,path}) => {
             />
           </svg>
           <h1 className="mt-2 text-center text-2xl font-bold text-gray-500">
-            Task Failed
+            Voting Time Not Exist
           </h1>
 
           <div className="space-x-4 bg-gray-100 py-4 text-center">
-            <button
-              onClick={() => setHide(false)}
-              className="inline-block rounded-md bg-red-500 px-10 py-2 font-semibold text-red-100 shadow-md duration-75 hover:bg-red-400"
-            >
-              Close
-            </button>
+            <Link href={"/"}>
+              <button className="inline-block rounded-md bg-red-500 px-10 py-2 font-semibold text-red-100 shadow-md duration-75 hover:bg-red-400">
+                Home
+              </button>
+            </Link>
           </div>
         </div>
       </div>

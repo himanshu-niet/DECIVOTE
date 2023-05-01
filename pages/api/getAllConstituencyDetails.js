@@ -8,14 +8,15 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
 
- const { electionId } = req.body;
+ const electionId  = req.query.electionId;
 
- if (!electionId) throw "Bad Request";
+console.log(electionId)
 
  const data = {
    _electionId: parseInt(electionId),
  };
 
+ console.log(data);
  const response = await read_contract.getAllConstituencyDetails(
    data._electionId
  );

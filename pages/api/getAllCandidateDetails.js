@@ -7,10 +7,9 @@ import {
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const { electionId, constituencyId } = req.body;
+      const { electionId, constituencyId } = req.query;
 
-      if (!electionId) throw "Bad Request";
-
+   
       const data = {
         _electionId: parseInt(electionId),
         _constituencyId: parseInt(constituencyId),

@@ -3,38 +3,50 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import { addConstituncyAPI } from "../apiClient";
-import { useMutation } from "@tanstack/react-query";
+import Loader from "./dialog/lodder";
   
-const AddConstituency = () => {
+const AddConstituency = ({ electionId }) => {
   const [show, setShow] = useState(false);
+   
+  const [loader, setLoader] = useState(false);
 
-  const constituencyMutation = useMutation({
-    mutationFn: addConstituncyAPI,
-    onSuccess: () => {
-      toast.success("Constituency Added.");
-      // queryClient.invalidateQueries({ queryKey: ["elections"] });
+  const formik = useFormik({
+    initialValues: {
+      electionId: electionId,
+      name: "",
+      constituencyCode: "",
     },
+    onSubmit: async(values) => {
+      console.log(values)
+
+      try {
+        setLoader(true);
+        const res = await addConstituncyAPI(values);
+        if (res.status == 200) {
+          setLoader(false);
+          toast.success("Election Added.");
+        } else {
+          setLoader(false);
+          toast.error("Election Not Added.");
+        }
+      } catch (error) {
+        setLoader(false);
+        toast.error("Election Not Added.");
+      }
+   
+       
+    
+      formik.resetForm()
+    },
+    validationSchema: yup.object({
+      name: yup.string().trim().required("Name is required"),
+      constituencyCode: yup
+        .string()
+        .trim()
+        .required("Constituency is required"),
+    }),
   });
-
-
-    const formik = useFormik({
-      initialValues: {
-        name: "",
-        constituencyCode: "",
-      },
-      onSubmit: (values) => {
-        constituencyMutation.mutate(values)
-        
-        
-      },
-      validationSchema: yup.object({
-        name: yup.string().trim().required("Name is required"),
-        constituencyCode: yup
-          .string()
-          .trim()
-          .required("Constituency is required"),
-      }),
-    });
+    if (loader) return <Loader show={true} />;
 
   return (
     <section className=" py-1 ">
@@ -88,17 +100,16 @@ const AddConstituency = () => {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Select Constituency
+                       Constituency Code
                     </label>
-                    <select
+                    <input
+                      type="number"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      value={formik.values.constituencyCode}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       name="constituencyCode"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    >
-                      <option value={"1"}>Uttar Pradesh</option>
-                      <option value={"2"}>m Pradesh</option>
-                    </select>
+                    />
                     {formik.errors.constituencyCode && (
                       <div className="text-danger">
                         {formik.errors.constituencyCode}

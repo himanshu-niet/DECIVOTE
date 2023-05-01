@@ -52,7 +52,12 @@ const ElectionTr = ({
       </td>
 
       <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        <Link href={"/election/constituencies"}>
+        <Link
+          href={{
+            pathname: "/election/constituencies",
+            query: { electionId: id },
+          }}
+        >
           <a className="bg-accent text-white active:bg-accent font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
             Click
           </a>

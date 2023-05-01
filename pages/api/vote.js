@@ -5,12 +5,11 @@ import {
 } from "../../responseHander/sendResponse";
 
 export default async function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
     try {
-      const { electionId, constituencyId, candidateId, voterId } = req.body;
+      const { electionId, constituencyId, candidateId, voterId } = req.query;
 
-      if ((!electionId, !constituencyId, !candidateId, !voterId))
-        throw "Bad Request";
+     
 
       const data = {
         _electionId: parseInt(electionId),

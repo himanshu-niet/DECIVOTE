@@ -5,10 +5,13 @@ import Link from "next/link";
 
 import { fadeInDown } from "../../variants";
 import Election_Card from "../../components/vote/election_Card";
+import { getAllElectionAPI } from "../../apiClient";
+import { useRouter } from "next/router";
 
 const Vote = () => {
    const [header, setHeader] = useState(false);
- 
+  
+
   useEffect(() => {
     // scroll event
     window.addEventListener("scroll", () => {
@@ -16,6 +19,28 @@ const Vote = () => {
       window.scrollY > 80 ? setHeader(true) : setHeader(false);
     });
   });
+
+
+  const BigToInt=(val)=>Number(val)
+
+const BigToDate=(val)=>{
+  const date = new Date(Number(val) * 1000);
+  return date.toLocaleString();
+  }
+
+
+  
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const res = await getAllElectionAPI();
+    console.log(res);
+    setData(res.data);
+  };
+
 
   return (
     <div className="overflow-hidden max-w-[1600px] mx-auto bg-page">
@@ -36,7 +61,7 @@ const Vote = () => {
               </h1>
             </Link>
             <h1 className={`  text-3xl ml-2 font-semibold`}>
-              Ongoing Election
+              Choose Election
             </h1>
             <h1 className={` text-3xl ml-2 font-semibold`}>Cast Vote</h1>
 
@@ -50,16 +75,28 @@ const Vote = () => {
           <section className="text-gray-600 body-font  flex justify-center items-center">
             <div className="container px-5 py-10 mx-auto">
               <div className="flex flex-wrap -m-4 text-center">
-                <Election_Card />
-                <Election_Card />
-                <Election_Card />
-                <Election_Card />
-
-                <Election_Card />
-                <Election_Card />
-                <Election_Card />
-                <Election_Card />
-                <Election_Card />
+                {data
+                  ? data.map((item, index) => {
+                      return (
+                        <Election_Card
+                          key={index}
+                          id={BigToInt(item[0].hex)}
+                          name={item[1]}
+                          votingStartTime={BigToDate(item[2].hex)}
+                          votingEndTime={BigToDate(item[3].hex)}
+                          candidateRegistrationStartTime={BigToDate(
+                            item[4].hex
+                          )}
+                          candidateRegistrationEndTime={BigToDate(item[5].hex)}
+                          totalVotes={BigToInt(item[6].hex)}
+                          stateCode={BigToInt(item[7].hex)}
+                          constituencyCounter={BigToInt(item[8].hex)}
+                         
+                        />
+                      );
+                    })
+                  : null}
+            
               </div>
             </div>
           </section>

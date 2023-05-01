@@ -22,16 +22,10 @@ export default async function handler(req, res) {
         cEndTime
       } = req.body;
 
-      if (
-        (!name,
-        !stateCode,
-        !vStartTime,
-        !vEndTime,
-        !cStartTime,
-        !cEndTime)
-      )
-        throw "Bad Request";
+      console.log(req.body)
 
+   
+      
      const data = {
        _name: name,
        _votingStartTime: parseInt(dateToTimestamp(vStartTime)),

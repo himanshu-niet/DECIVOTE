@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react'
 
 const Success = ({show}) => {
@@ -22,13 +23,14 @@ const Success = ({show}) => {
             Success
           </h1>
           <p className="my-4 text-center text-sm text-gray-500">
-            Successfully completed Tasks
+            Successfully Vote Cast
           </p>
           <div className="space-x-4 bg-gray-100 py-4 text-center">
-            <button onClick={()=>setHide(false)} className="inline-block rounded-md bg-red-500 px-10 py-2 font-semibold text-red-100 shadow-md duration-75 hover:bg-red-400">
-              Close
-            </button>
-           
+            <Link href={"/"}>
+              <button className="inline-block rounded-md bg-red-500 px-10 py-2 font-semibold text-red-100 shadow-md duration-75 hover:bg-red-400">
+                Home
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -2,27 +2,57 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import { addCandidateAPI } from "../apiClient";
+import Loader from "./dialog/lodder";
 
-const AddCandidate = () => {
+const AddCandidate = ({ electionId, constituencyId }) => {
   const [show, setShow] = useState(false);
+     
+  const [loader, setLoader] = useState(false);
   const formik = useFormik({
     initialValues: {
+      electionId: electionId,
+      constituencyId: constituencyId,
       name: "",
-      photoUrl: "",
+      shortName: "",
       partyName: "",
       partySymbol: "",
     },
-    onSubmit: (values) => {
-      toast.success("Form submitted");
-      console.log(values);
+    onSubmit: async(values) => {
+
+      console.log(values)
+      
+      try {
+        setLoader(true);
+         const res = await addCandidateAPI(values);
+        if (res.status == 200) {
+          setLoader(false);
+          toast.success("Election Added.");
+        } else {
+          setLoader(false);
+          toast.error("Election Not Added.");
+        }
+      } catch (error) {
+        setLoader(false);
+        toast.error("Election Not Added.");
+      }
+   
+      
+      formik.resetForm()
     },
     validationSchema: yup.object({
       name: yup.string().trim().required("Name is required"),
       partyName: yup.string().trim().required("Party Name is required"),
-      photoUrl: yup.string().trim().required("Candidate Photo Url is required"),
+      shortName: yup
+        .string()
+        .trim()
+        .required("Candidate shortName  is required"),
       partySymbol: yup.string().trim().required("Party Symbol is required"),
     }),
   });
+
+    if (loader) return <Loader show={true} />;
+
 
   return (
     <section className=" py-1 ">
@@ -100,45 +130,46 @@ const AddCandidate = () => {
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Candidate Photo Url
+                      Candidate Party ShortName
                     </label>
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      value={formik.values.photoUrl}
+                      value={formik.values.shortName}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      name="photoUrl"
+                      name="shortName"
                     />
-                    {formik.errors.photoUrl && (
+                    {formik.errors.shortName && (
                       <div className="text-danger">
-                        {formik.errors.photoUrl}
+                        {formik.errors.shortName}
                       </div>
                     )}
                   </div>
                 </div>
-                <div className="w-full lg:w-6/12 px-4"> <div className="relative w-full mb-3">
-                  <label
-                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                    htmlFor="grid-password"
-                  >
-                    Party Symbol Url
-                  </label>
-                  <input
-                    type="text"
-                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    name="partySymbol"
-                  />
-                  {formik.errors.partySymbol && (
-                    <div className="text-danger">
-                      {formik.errors.partySymbol}
-                    </div>
-                  )}
-                </div></div>
-
-               
+                <div className="w-full lg:w-6/12 px-4">
+                  {" "}
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Party Symbol Url
+                    </label>
+                    <input
+                      type="text"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      name="partySymbol"
+                    />
+                    {formik.errors.partySymbol && (
+                      <div className="text-danger">
+                        {formik.errors.partySymbol}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="flex  mt-5 justify-center">
                 <div className="">

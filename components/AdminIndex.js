@@ -8,10 +8,8 @@ import { staggerContainer, fadeInDown } from "../variants";
 import AdminHeader from "./AdminHeader";
 import AddElection from "./AddElection";
 import ElectionTr from "./electionTr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllElectionAPI } from "../apiClient";
-import { useQuery } from "@tanstack/react-query";
-
 
 const BigToInt=(val)=>Number(val)
 
@@ -24,12 +22,23 @@ const BigToDate=(val)=>{
 const AdminIndex = ({ headerData, navData }) => {
   // destructure heroData
     // const queryClient = useQueryClient();
-  const elections = useQuery({ queryKey: ["elections"], queryFn: getAllElectionAPI });
-console.log(elections.data)
+    
+  
   const [show, setShow] = useState(true);
 
+  const [data, setData] = useState([]);
+useEffect(()=>{
+getData()
 
- 
+},[])
+
+const getData=async()=>{
+ const res = await getAllElectionAPI();
+ console.log(res);
+ setData(res.data); 
+}
+
+
     return (
       <section className="bg-page bg-no-repeat bg-left-top min-h-screen lg:min-h-screen lg:mb-40">
         {/* container */}
@@ -143,11 +152,11 @@ console.log(elections.data)
                           </tr>
                         </thead>
                         <tbody>
-                          {elections.isSuccess
+                          {data
                             ? 
                             
-                            elections.data.data.map((item,index)=>{
-                              console.log(elections.data);
+                            data.map((item,index)=>{
+                            
                                return (
                                  <ElectionTr
                                    key={index}
@@ -164,10 +173,9 @@ console.log(elections.data)
                                    totalVotes={BigToInt(item[6].hex)}
                                    stateCode={BigToInt(item[7].hex)}
                                    constituencyCounter={BigToInt(item[8].hex)}
+                                   
                                  />
                                );
-                          
-                               console.log(item)
                               })
 
                               :null}

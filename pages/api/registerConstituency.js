@@ -11,14 +11,15 @@ export default async function handler(req, res) {
 
        const { electionId, name, constituencyCode } = req.body;
 
-       if ((!electionId, constituencyCode, !name)) throw "Bad Request";
-
-     const  data = {
+       
+console.log(req.body)
+     const data = {
          _electionId: parseInt(electionId),
          _name: name,
          _constituencyCode: parseInt(constituencyCode),
        };
 
+       console.log(data)
       const response = await write_contract.registerConstituency(
         data._electionId,
         data._name,

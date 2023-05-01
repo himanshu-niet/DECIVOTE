@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
 
-const ElectionDetail = () => {
+const ElectionDetail = ({
+  id,
+  name,
+  votingStartTime,
+  votingEndTime,
+  candidateRegistrationStartTime,
+  candidateRegistrationEndTime,
+  totalVotes,
+  stateCode,
+  constituencyCounter,
+}) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -21,7 +31,7 @@ const ElectionDetail = () => {
               </button>
             </div>
           </div>
-<hr></hr>
+          <hr></hr>
           <div className={`overflow-x-auto p-3 ${show ? "" : "hidden"}`}>
             <table className="table-auto w-full">
               <tbody className="text-sm divide-y divide-gray-100">
@@ -31,7 +41,7 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">1</div>
+                    <div className="font-medium text-gray-800">{id}</div>
                   </td>
                 </tr>
                 <tr>
@@ -42,9 +52,7 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">
-                      Uttar Pradesh Election
-                    </div>
+                    <div className="font-medium text-gray-800">{name}</div>
                   </td>
                 </tr>
                 <tr>
@@ -54,7 +62,7 @@ const ElectionDetail = () => {
 
                   <td className="p-2">
                     <div className="font-medium text-gray-800">
-                      Uttar Pradesh
+                      {votingStartTime}
                     </div>
                   </td>
                 </tr>
@@ -66,7 +74,9 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">20/20/2023</div>
+                    <div className="font-medium text-gray-800">
+                      {votingEndTime}
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -77,7 +87,9 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">20/20/2023</div>
+                    <div className="font-medium text-gray-800">
+                      {candidateRegistrationStartTime}
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -88,7 +100,9 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">20/20/2023</div>
+                    <div className="font-medium text-gray-800">
+                      {candidateRegistrationEndTime}
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -99,7 +113,9 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">20/20/2023</div>
+                    <div className="font-medium text-gray-800">
+                      {candidateRegistrationEndTime}
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -110,7 +126,7 @@ const ElectionDetail = () => {
                   </td>
 
                   <td className="p-2">
-                    <div className="font-medium text-gray-800">5</div>
+                    <div className="font-medium text-gray-800">{constituencyCounter}</div>
                   </td>
                 </tr>
               </tbody>
@@ -120,6 +136,6 @@ const ElectionDetail = () => {
       </div>
     </section>
   );
-}
+};
 
 export default ElectionDetail

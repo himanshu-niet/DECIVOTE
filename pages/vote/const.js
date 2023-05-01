@@ -5,13 +5,15 @@ import Link from "next/link";
 
 import { fadeInDown } from "../../variants";
 import Candidate_Card from "../../components/vote/candidate_Card";
+import Constituency_Card from "../../components/vote/const";
 import { useRouter } from "next/router";
-import { getAllCandidateAPI } from "../../apiClient";
+import { getAllContiturncyAPI } from "../../apiClient";
 
 
 const CastVote = () => {
   const [header, setHeader] = useState(false);
-
+ 
+  const router = useRouter();
   useEffect(() => {
     // scroll event
     window.addEventListener("scroll", () => {
@@ -19,31 +21,26 @@ const CastVote = () => {
       window.scrollY > 80 ? setHeader(true) : setHeader(false);
     });
   });
-   
 
-  const router = useRouter();
+ useEffect(() => {
+   if (!router.isReady) return;
+   const electionId = router.query.electionId;
  
-  useEffect(() => {
-    if (!router.isReady) return;
-    const electionId = router.query.electionId;
-    const constituencyId = router.query.constituencyId;
-    
+   getDataC(electionId);
+ }, [router.isReady]);
   
-    getDataCandidate(electionId, constituencyId);
-  }, [router.isReady]);
-
-   const [candidates, setCandidates] = useState([]);
+  const BigToInt = (val) => Number(val);
 
 
-   const getDataCandidate = async (electionId, constituencyId) => {
-     const res = await getAllCandidateAPI(electionId, constituencyId);
-     setCandidates(res.data);
-     console.log(res.data, "candidate");
-   };
-
-   const BigToInt = (val) => Number(val);
-
+  const [data, setData] = useState([]);
   
+
+  const getDataC = async (electionId) => {
+    const res = await getAllContiturncyAPI(electionId);
+    console.log(res);
+    setData(res.data);
+  };
+
 
   return (
     <div className="overflow-hidden max-w-[1600px] mx-auto bg-page">
@@ -64,7 +61,7 @@ const CastVote = () => {
               </h1>
             </Link>
             <h1 className={`  text-3xl ml-2 font-semibold`}>
-              Choose Candidate
+              Choose Constituency
             </h1>
             <h1 className={` text-3xl ml-2 font-semibold`}>Cast Vote</h1>
 
@@ -78,20 +75,19 @@ const CastVote = () => {
           <section className="text-gray-600 body-font  flex justify-center items-center">
             <div className="container px-5 py-10 mx-auto">
               <div className="flex flex-wrap -m-4 text-center">
-                {candidates
-                  ? candidates.map((item, index) => {
+                {data
+                  ? data.map((item, index) => {
                       return (
-                        <Candidate_Card
+                        <Constituency_Card
                           key={index}
-                          id={BigToInt(item[0].hex)}
-                          name={BigToInt(item[3])}
-                          partyName={item[4]}
-                          partyShortcutName={item[6]}
-                          partySymbol={item[7]}
-                          totalVotes={BigToInt(item[9].hex)}
-                          constituencyId={BigToInt(item[1].hex)}
-                          electionId={BigToInt(item[3].hex)}
-                        
+                          constituencyId={BigToInt(item[0].hex)}
+                          name={item[2]}
+                          totalVotes={BigToInt(item[3].hex)}
+                          stateCode={BigToInt(item[6].hex)}
+                          constituencyCode={BigToInt(item[1].hex)}
+                          electionId={BigToInt(item[5].hex)}
+                          candidateCounter={BigToInt(item[4].hex)}
+                     
                         />
                       );
                     })

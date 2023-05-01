@@ -10,12 +10,50 @@ import AdminHeader from "./AdminHeader";
 import AddConstituency from "./AddConstituency";
 import ContituencyTr from "./contituencyTr";
 import ElectionDetail from "./ElectionDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  getAllContiturncyAPI,
+  getAllElectionAPI,
+  getElectionAPI,
+} from "../apiClient";
+import { useRouter } from "next/router";
+import Loader from "./dialog/lodder";
 
 const AddConstituencies = ({ headerData, navData }) => {
   const [show, setShow] = useState(false);
+  const router = useRouter();
+  const [id,setId]=useState();
 
-  // destructure heroData
+  useEffect(() => {
+    if (!router.isReady) return;
+    const electionId = router.query.electionId;
+    setId(electionId)
+    getDataC(electionId);
+    getDataE(electionId);
+  }, [router.isReady]);
+
+  const [data, setData] = useState([]);
+
+  const [election, setElection] = useState([]);
+
+  const getDataC = async (electionId) => {
+    const res = await getAllContiturncyAPI(electionId);
+    setData(res.data);
+    console.log(res.data)
+  };
+  const getDataE = async (electionId) => {
+    const res = await getElectionAPI(electionId);
+    setElection(res.data);
+  };
+
+
+  const BigToInt = (val) => Number(val);
+
+  const BigToDate = (val) => {
+    const date = new Date(Number(val) * 1000);
+    return date.toLocaleString();
+  };
+
   return (
     <section className="bg-page bg-no-repeat bg-left-top min-h-screen lg:min-h-screen lg:mb-40">
       {/* container */}
@@ -33,12 +71,25 @@ const AddConstituencies = ({ headerData, navData }) => {
         {/* title */}
         <div className="pt-[8rem] px-[5rem] ">
           <div>
-            <ElectionDetail />
+            {election.length > 0 ? (
+              <ElectionDetail
+                key={election[0].hex}
+                id={BigToInt(election[0].hex)}
+                name={election[1]}
+                votingStartTime={BigToDate(election[2].hex)}
+                votingEndTime={BigToDate(election[3].hex)}
+                candidateRegistrationStartTime={BigToDate(election[4].hex)}
+                candidateRegistrationEndTime={BigToDate(election[5].hex)}
+                totalVotes={BigToInt(election[6].hex)}
+                stateCode={BigToInt(election[7].hex)}
+                constituencyCounter={BigToInt(election[8].hex)}
+              />
+            ) : (
+              null
+            )}
           </div>
 
-          <div>
-            <AddConstituency />
-          </div>
+          <div>{id ? <AddConstituency electionId={id} /> : null}</div>
 
           <div>
             <section className=" py-1 ">
@@ -88,15 +139,24 @@ const AddConstituencies = ({ headerData, navData }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        <ContituencyTr
-                          constituencyId={1}
-                          name={"Phholpur"}
-                          totalVotes={0}
-                          stateCode={2}
-                          constituencyCode={256}
-                          electionId={121}
-                          candidateCounter={5}
-                        />
+                        {data
+                          ? data.map((item, index) => {
+                              return (
+
+                    
+                                <ContituencyTr
+                                  key={index}
+                                  constituencyId={BigToInt(item[0].hex)}
+                                  name={item[2]}
+                                  totalVotes={BigToInt(item[3].hex)}
+                                  stateCode={BigToInt(item[6].hex)}
+                                  constituencyCode={BigToInt(item[1].hex)}
+                                  electionId={BigToInt(item[5].hex)}
+                                  candidateCounter={BigToInt(item[4].hex)}
+                                />
+                              );
+                            })
+                          : null}
                       </tbody>
                     </table>
                   </div>

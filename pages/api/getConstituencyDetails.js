@@ -9,9 +9,8 @@ export default async function handler(req, res) {
     try {
 
 
- const { electionId, constituencyId } = req.body;
+ const { electionId, constituencyId } = req.query;
 
- if ((!electionId, !constituencyId)) throw "Bad Request";
 
  const data = {
    _electionId: parseInt(electionId),

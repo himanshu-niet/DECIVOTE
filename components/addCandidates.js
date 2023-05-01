@@ -16,12 +16,67 @@ import AdminHeader from "./AdminHeader";
 import AddCandidate from "./AddCandidate";
 import CandidateTr from "./candidateTr";
 import ElectionDetail from "./ElectionDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConstituencyDetail from "./ConstituencyDetail";
+import { useRouter } from "next/router";
+import { getAllCandidateAPI, getContiturncyAPI, getElectionAPI } from "../apiClient";
+import { namehash } from "ethers/lib/utils";
 
 const AddCandidates = ({ headerData, navData }) => {
   // destructure heroData
   const [show, setShow] = useState(false);
+
+
+   const router = useRouter();
+   const [eId, setEid] = useState()
+   const [cid, setCid] = useState();
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const electionId = router.query.electionId;
+    const constituencyId = router.query.constituencyId;
+    setEid(electionId);
+    setCid(constituencyId);
+
+    getDataElection(electionId);
+    getDataCandidate(electionId, constituencyId);
+    getDataContituency(electionId,constituencyId)
+  }, [router.isReady]);
+
+
+  const [candidates, setCandidates] = useState([]);
+
+  const [election, setElection] = useState([]);
+
+  const [constituency, setConstituency] = useState([]);
+
+const getDataContituency = async (electionId, constituencyId) => {
+  const res = await getContiturncyAPI(electionId, constituencyId);
+  setConstituency(res.data);
+  console.log(res.data,"contituenty");
+};
+
+  const getDataElection = async (electionId) => {
+    const res = await getElectionAPI(electionId);
+    setElection(res.data);
+    console.log(res)
+  };
+
+
+  const getDataCandidate = async (electionId, constituencyId) => {
+    const res = await getAllCandidateAPI(electionId, constituencyId);
+    setCandidates(res.data);
+    console.log(res.data, "candidate");
+  };
+
+
+  
+  const BigToInt = (val) => Number(val);
+
+  const BigToDate = (val) => {
+    const date = new Date(Number(val) * 1000);
+    return date.toLocaleString();
+  };
 
   return (
     <section className="bg-page bg-no-repeat bg-left-top min-h-screen lg:min-h-screen lg:mb-40">
@@ -40,14 +95,38 @@ const AddCandidates = ({ headerData, navData }) => {
         {/* title */}
         <div className="pt-[8rem] px-[5rem] ">
           <div>
-            <ElectionDetail />
+            {election.length > 0 ? (
+              <ElectionDetail
+                key={election[0].hex}
+                id={BigToInt(election[0].hex)}
+                name={election[1]}
+                votingStartTime={BigToDate(election[2].hex)}
+                votingEndTime={BigToDate(election[3].hex)}
+                candidateRegistrationStartTime={BigToDate(election[4].hex)}
+                candidateRegistrationEndTime={BigToDate(election[5].hex)}
+                totalVotes={BigToInt(election[6].hex)}
+                stateCode={BigToInt(election[7].hex)}
+                constituencyCounter={BigToInt(election[8].hex)}
+              />
+            ) : null}
           </div>
           <div>
-            <ConstituencyDetail/>
+            {constituency.length > 0 ? (
+              <ConstituencyDetail
+                key={constituency[0].hex}
+                electionId={BigToInt(constituency[5].hex)}
+                id={BigToInt(constituency[0].hex)}
+                name={constituency[2]}
+                constituencyCode={BigToInt(constituency[1].hex)}
+                totalCandidate={BigToInt(constituency[4].hex)}
+              />
+            ) : null}
           </div>
 
           <div>
-            <AddCandidate />
+            {cid ? (
+              <AddCandidate electionId={eId} constituencyId={cid} />
+            ) : null}
           </div>
 
           <div>
@@ -74,7 +153,7 @@ const AddCandidates = ({ headerData, navData }) => {
                       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                           <th scope="col" className="px-6 py-3">
-                            Candidate Photo
+                            Candidate Id
                           </th>
                           <th scope="col" className="px-6 py-3">
                             Candidate Name
@@ -94,7 +173,23 @@ const AddCandidates = ({ headerData, navData }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        <CandidateTr />
+                        {candidates
+                          ? candidates.map((item, index) => {
+                              return (
+                                <CandidateTr
+                    
+                                  key={index}
+                                  id={BigToInt(item[0].hex)}
+                                  name={BigToInt(item[3])}
+                                  partyName={item[4]}
+                                  partyShortcutName={item[6]}
+                                  partySymbol={item[7]}
+                                  totalVotes={BigToInt(item[9].hex)}
+                                  
+                                />
+                              );
+                            })
+                          : null}
                       </tbody>
                     </table>
                   </div>

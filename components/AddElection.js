@@ -5,19 +5,20 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { addElectionAPI } from "../apiClient";
 import Loader from "./dialog/lodder";
+import Success from "./dialog/success";
 import Failed from "./dialog/failed";
-import { useMutation } from "@tanstack/react-query";
+
 
 const AddElection = () => {
-  const electionMutation = useMutation({
-    mutationFn: addElectionAPI,
-    onSuccess: () => {
-      toast.success("Election Added.");
-      // queryClient.invalidateQueries({ queryKey: ["elections"] });
-    },
-  });
+ 
 
   const [show, setShow] = useState(false);
+
+  const [loader, setLoader] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [falild, setFalild] = useState(false);
+
+  
 
   const formik = useFormik({
     initialValues: {
@@ -28,8 +29,23 @@ const AddElection = () => {
       cStartTime: "",
       cEndTime: "",
     },
-    onSubmit: (values) => {
-      electionMutation.mutate(values);
+    onSubmit: async(values) => {
+
+    try {
+      setLoader(true);
+      const res = await addElectionAPI(values);
+      if (res.status==200) {
+        setLoader(false);
+        setSuccess(true)
+      }
+      else{
+        setLoader(false);
+        setFalild(true)
+      }
+    } catch (error) {
+        setLoader(false);
+        setFalild(true);
+    }
       formik.resetForm()
     },
     validationSchema: yup.object({
@@ -49,9 +65,11 @@ const AddElection = () => {
   });
 
 
-  if(electionMutation.isLoading) return <Loader show={true}/>
+   if (loader) return <Loader show={true} />;
+   if (success) return <Success show={true} />;
+   if (falild) return <Failed show={true} />;
 
-  if (electionMutation.isError) return <Failed  show={true} path={"election"}/>;
+  // if (electionMutation.isError) return <Failed  show={true} path={"election"}/>;
 
   return (
     <section className=" py-1 ">
@@ -107,6 +125,7 @@ const AddElection = () => {
                     >
                       Select State
                     </label>
+
                     <select
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -114,7 +133,9 @@ const AddElection = () => {
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     >
                       <option value={"1"}>Uttar Pradesh</option>
-                      <option value={"2"}>m Pradesh</option>
+                      <option value={"2"}>Madhya Pradesh</option>
+                      <option value={"3"}>Bihar</option>
+                      <option value={"4"}>Delhi</option>
                     </select>
                     {formik.errors.stateCode && (
                       <div className="text-danger">

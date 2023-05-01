@@ -1,25 +1,61 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 // import components
-import Header from './Header';
+import Header from "./Header";
 
 // import motion
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 // import variants
-import {
-  staggerContainer,
-  
-  fadeInDown,
-} from '../variants';
+import { staggerContainer, fadeInDown } from "../variants";
 
 // import icons
-import { CgArrowLongRight } from 'react-icons/cg';
-import Header2 from './Header2';
+import { CgArrowLongRight } from "react-icons/cg";
+import Header2 from "./Header2";
+import { useEffect, useState } from "react";
+import { getAllCandidateAPI, getAllContiturncyAPI, getAllElectionAPI } from "../apiClient";
 
 const Hero2 = ({ headerData, heroData, navData }) => {
   // destructure heroData
-  const { title, boyImg, girlImg, truckImg, btnText } = heroData;
+
+  // const [constituency, setCont] = useState();
+  // const [data, setData] = useState([]);
+
+  // const [election, setElection] = useState(0);
+  // const [con, setC] = useState(0);
+
+  // useEffect(() => {
+  //   console.log(election)
+  //   getDataC(election);
+  // }, [election]);
+
+  // useEffect(() => {
+  //   getDataCandidate(election,con)
+  // }, [constituency]);
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  // const getDataC = async (electionId) => {
+  //   const res = await getAllContiturncyAPI(electionId);
+  //   setCont(res.data);
+  //   console.log(res.data);
+  // };
+
+  // const getData = async () => {
+  //   const res = await getAllElectionAPI();
+  //   console.log(res);
+  //   setData(res.data);
+  // };
+
+  //  const getDataCandidate = async (electionId, constituencyId) => {
+  //    const res = await getAllCandidateAPI(electionId, constituencyId);
+  //    setC(res.data);
+  //    console.log(res.data, "candidate");
+  //  };
+  // const BigToInt = (val) => Number(val);
+
   return (
     <section className="bg-page bg-no-repeat bg-left-top min-h-screen lg:min-h-screen lg:mb-40">
       {/* container */}
@@ -45,15 +81,37 @@ const Hero2 = ({ headerData, heroData, navData }) => {
             <form className="flex justify-between mt-5">
               <div>
                 <span>Select Election</span>
-                <select className="mx-2 px-2 py-1 border-2 border-gray-500 rounded">
-                  <option>Uttar Pradesh</option>
-                </select>
+                {/* <select
+                onChange={(e) => setElection(e.target.value)}
+                  className="mx-2 px-2 py-1 border-2 border-gray-500 rounded"
+                >
+                  {data
+                    ? data.map((item, index) => {
+                        return (
+                          <option key={index} value={BigToInt(item[0].hex)}>
+                            {item[1]}
+                          </option>
+                        );
+                      })
+                    : null}
+                </select> */}
               </div>
               <div>
                 <span>Select Constituency</span>
-                <select className="mx-2 px-2 py-1 border-2 border-gray-500 rounded">
-                  <option>Phoolpur</option>
-                </select>
+                {/* <select
+                  onChange={(e) => setC(e.target.value)}
+                  className="mx-2 px-2 py-1 border-2 border-gray-500 rounded"
+                >
+                  {constituency
+                    ? constituency.map((item, index) => {
+                        return (
+                          <option key={index} value={BigToInt(item[0].hex)}>
+                            {item[2]}
+                          </option>
+                        );
+                      })
+                    : null}
+                </select> */}
               </div>
               <button className="bg-accent px-3 py-2 rounded-md text-white ">
                 Search

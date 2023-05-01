@@ -9,6 +9,7 @@
     { "name": "Election Commission", "href": "/election" },
     { "name": "Cast Vote", "href": "/vote" },
      { "name": "Voter Registration", "href": "/voterReg" }
+   
   ],
 
   "heroData": {
