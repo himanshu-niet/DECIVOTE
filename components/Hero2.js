@@ -162,10 +162,10 @@ const Hero2 = ({ headerData, heroData, navData }) => {
                     />
                   </th>
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Arvind
+                    DEMO NAME
                   </td>
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    AAP
+                    BJP-A
                   </td>
                   <td className="px-6 py-4">
                     <img
@@ -192,10 +192,10 @@ const Hero2 = ({ headerData, heroData, navData }) => {
                     />
                   </th>
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Arvind
+                    Demo Name
                   </td>
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    AAP
+                    Other
                   </td>
                   <td className="px-6 py-4">
                     <img
